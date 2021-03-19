@@ -1,0 +1,29 @@
+﻿  GameScene.cpp
+C:\Users\User\source\repos\02_2018180029\SimpleGame\Renderer.h(26,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'S_PARTICLE' 왼쪽은 무시됩니다.
+C:\Users\User\source\repos\02_2018180029\SimpleGame\GSEGlobals.h(26,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'GSEInputs' 왼쪽은 무시됩니다.
+C:\Users\User\source\repos\02_2018180029\SimpleGame\GSEGlobals.h(32,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'GSEUpdateParams' 왼쪽은 무시됩니다.
+C:\Users\User\source\repos\02_2018180029\SimpleGame\GameScene.cpp(59,48): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\User\source\repos\02_2018180029\SimpleGame\GameScene.cpp(59,39): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\User\source\repos\02_2018180029\SimpleGame\GameScene.cpp(60,56): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\User\source\repos\02_2018180029\SimpleGame\GameScene.cpp(60,39): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\User\source\repos\02_2018180029\SimpleGame\GameScene.cpp(80,52): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\User\source\repos\02_2018180029\SimpleGame\GameScene.cpp(80,38): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  GSEGame.cpp
+C:\Users\User\source\repos\02_2018180029\SimpleGame\GSEGlobals.h(26,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'GSEInputs' 왼쪽은 무시됩니다.
+C:\Users\User\source\repos\02_2018180029\SimpleGame\GSEGlobals.h(32,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'GSEUpdateParams' 왼쪽은 무시됩니다.
+C:\Users\User\source\repos\02_2018180029\SimpleGame\Renderer.h(26,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'S_PARTICLE' 왼쪽은 무시됩니다.
+  ObjectController.cpp
+C:\Users\User\source\repos\02_2018180029\SimpleGame\Renderer.h(26,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'S_PARTICLE' 왼쪽은 무시됩니다.
+C:\Users\User\source\repos\02_2018180029\SimpleGame\GSEGlobals.h(26,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'GSEInputs' 왼쪽은 무시됩니다.
+C:\Users\User\source\repos\02_2018180029\SimpleGame\GSEGlobals.h(32,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'GSEUpdateParams' 왼쪽은 무시됩니다.
+  Player.cpp
+C:\Users\User\source\repos\02_2018180029\SimpleGame\GSEGlobals.h(26,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'GSEInputs' 왼쪽은 무시됩니다.
+C:\Users\User\source\repos\02_2018180029\SimpleGame\GSEGlobals.h(32,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'GSEUpdateParams' 왼쪽은 무시됩니다.
+C:\Users\User\source\repos\02_2018180029\SimpleGame\Renderer.h(26,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'S_PARTICLE' 왼쪽은 무시됩니다.
+  SimpleGame.cpp
+C:\Users\User\source\repos\02_2018180029\SimpleGame\Renderer.h(26,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'S_PARTICLE' 왼쪽은 무시됩니다.
+C:\Users\User\source\repos\02_2018180029\SimpleGame\GSEGlobals.h(26,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'GSEInputs' 왼쪽은 무시됩니다.
+C:\Users\User\source\repos\02_2018180029\SimpleGame\GSEGlobals.h(32,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'GSEUpdateParams' 왼쪽은 무시됩니다.
+  코드를 생성하고 있습니다...
+C:\Users\User\source\repos\02_2018180029\SimpleGame\GSEGame.cpp(356): warning C4715: 'GSEGame::AdjustPosition': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  SimpleGame.vcxproj -> C:\Users\User\source\repos\02_2018180029\x64\Debug\SimpleGame.exe
