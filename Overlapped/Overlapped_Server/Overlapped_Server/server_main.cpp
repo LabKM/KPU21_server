@@ -26,6 +26,7 @@ void CALLBACK recv_callback(DWORD Error, DWORD dataBytes, LPWSAOVERLAPPED overla
 
 	if (dataBytes == 0)
 	{
+		cout << "close socket when recieving" << endl;
 		closesocket(clients[client_s].socket);
 		clients.erase(client_s);
 		return;
@@ -45,6 +46,7 @@ void CALLBACK send_callback(DWORD Error, DWORD dataBytes, LPWSAOVERLAPPED overla
 	SOCKET client_s = reinterpret_cast<int>(overlapped->hEvent);
 
 	if (dataBytes == 0) {
+		cout << "close socket when sending" << endl;
 		closesocket(clients[client_s].socket);
 		clients.erase(client_s);
 		return;

@@ -1,2 +1,6 @@
 ﻿  over_client.cpp
-  OverlappedClient.vcxproj -> C:\Users\User\source\repos\Overlapped\OverlappedClient\x64\Debug\OverlappedClient.exe
+C:\Users\User\source\repos\kpu21_server_lkm\KPU21_server\Overlapped\OverlappedClient\OverlappedClient\over_client.cpp(72,60): warning C4311: 'reinterpret_cast': 'HANDLE'에서 'int'(으)로 포인터가 잘립니다.
+C:\Users\User\source\repos\kpu21_server_lkm\KPU21_server\Overlapped\OverlappedClient\OverlappedClient\over_client.cpp(72,60): warning C4302: 'reinterpret_cast': 'HANDLE'에서 'int'(으)로 잘립니다.
+C:\Users\User\source\repos\kpu21_server_lkm\KPU21_server\Overlapped\OverlappedClient\OverlappedClient\over_client.cpp(93,60): warning C4311: 'reinterpret_cast': 'HANDLE'에서 'int'(으)로 포인터가 잘립니다.
+C:\Users\User\source\repos\kpu21_server_lkm\KPU21_server\Overlapped\OverlappedClient\OverlappedClient\over_client.cpp(93,60): warning C4302: 'reinterpret_cast': 'HANDLE'에서 'int'(으)로 잘립니다.
+  OverlappedClient.vcxproj -> C:\Users\User\source\repos\kpu21_server_lkm\KPU21_server\Overlapped\OverlappedClient\x64\Debug\OverlappedClient.exe
