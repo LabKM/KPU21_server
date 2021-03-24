@@ -31,7 +31,7 @@ void CALLBACK recv_callback(DWORD Error, DWORD dataBytes, LPWSAOVERLAPPED overla
 		clients.erase(client_s);
 		return;
 	}  // 클라이언트가 closesocket을 했을 경우
-	cout << "From client : " << clients[client_s].messageBuffer << " (" << dataBytes << ") bytes)\n";
+	cout << "From client : " << clients[client_s].messageBuffer << " (" << dataBytes << " bytes)\n";
 	clients[client_s].dataBuffer.len = dataBytes;
 	memset(&(clients[client_s].overlapped), 0, sizeof(WSAOVERLAPPED));
 	clients[client_s].overlapped.hEvent = (HANDLE)client_s;

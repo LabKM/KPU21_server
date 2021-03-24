@@ -6,6 +6,8 @@ using namespace std;
 #define SERVER_IP        "127.0.0.1"
 #define SERVER_PORT        3500
 
+// https://popcorntree.tistory.com/80
+
 struct SOCKETINFO
 {
 	WSAOVERLAPPED overlapped;
@@ -14,10 +16,23 @@ struct SOCKETINFO
 	char messageBuffer[MAX_BUFFER];
 };
 
+bool bEnd;
 SOCKETINFO socketinfo;
 
 void CALLBACK recv_callback(DWORD Error, DWORD dataBytes, LPWSAOVERLAPPED overlapped, DWORD lnFlags);
 void CALLBACK send_callback(DWORD Error, DWORD dataBytes, LPWSAOVERLAPPED overlapped, DWORD lnFlags);
+
+void do_send() {
+	cout << "Enter Message : ";
+	cin.getline(socketinfo.messageBuffer, MAX_BUFFER);
+	int bufferLen = static_cast<int>(strlen(socketinfo.messageBuffer));
+	if (bufferLen == 0)
+		bEnd = true;
+	socketinfo.dataBuffer.len = bufferLen;
+	memset(&socketinfo.overlapped, 0, sizeof(WSAOVERLAPPED));
+	WSASend(socketinfo.socket, &socketinfo.dataBuffer, 1, NULL, 0,
+		&(socketinfo.overlapped), send_callback);
+}
 
 int main()
 {
@@ -36,40 +51,26 @@ int main()
 		system("pause");
 		return 0;
 	}
-	//while (true) {
-	//	char messageBuffer[MAX_BUFFER];
-	//	cout << "Enter Message: ";
-	//	cin.getline(messageBuffer, MAX_BUFFER);
-	//	int bufferLen = static_cast<int>(strlen(messageBuffer));
-	//	if (bufferLen == 0) 
-	//		break;	
-	//	int sendBytes = send(serverSocket, messageBuffer, bufferLen + 1, 0);
-	//	cout << "Sent : " << messageBuffer << "(" << sendBytes << " bytes)\n";
-	//	int receiveBytes = recv(serverSocket, messageBuffer, MAX_BUFFER, 0);
-	//	cout << "Received : " << messageBuffer << " (" << receiveBytes << " bytes)\n";
-	//}
+
 	socketinfo.socket = serverSocket;
 	socketinfo.dataBuffer.len = MAX_BUFFER;
 	socketinfo.dataBuffer.buf = socketinfo.messageBuffer;
 	socketinfo.overlapped.hEvent = (HANDLE)socketinfo.socket;
-	while (true) {
-		cout << "Enter Message : ";
-		cin.getline(socketinfo.messageBuffer, MAX_BUFFER);
-		int bufferLen = static_cast<int>(strlen(socketinfo.messageBuffer));
-		if (bufferLen == 0) 
-			break;	
-		socketinfo.dataBuffer.len = bufferLen;
-		memset(&socketinfo.overlapped, 0, sizeof(WSAOVERLAPPED));
-		WSASend(socketinfo.socket, &socketinfo.dataBuffer, 1, NULL, 0, 
-			&(socketinfo.overlapped), send_callback);
-	}
+	
+	bEnd = false;
+	do_send();
+	while (!bEnd)
+		SleepEx(100, true);
+
 	closesocket(serverSocket);
 	WSACleanup();
 }
 
+
+
 void CALLBACK recv_callback(DWORD Error, DWORD dataBytes, LPWSAOVERLAPPED overlapped, DWORD lnFlags)
 {
-	SOCKET server_s = reinterpret_cast<int>(overlapped->hEvent);
+	SOCKET server_s = reinterpret_cast<SOCKETINFO*>(overlapped)->socket;
 
 	if (dataBytes == 0)
 	{
@@ -78,19 +79,18 @@ void CALLBACK recv_callback(DWORD Error, DWORD dataBytes, LPWSAOVERLAPPED overla
 		system("pause");
 		return;
 	}  // 클라이언트가 closesocket을 했을 경우
-	cout << "Received : " << socketinfo.messageBuffer << " (" << dataBytes << ") bytes)\n";
+	cout << "Received : " << socketinfo.messageBuffer << " (" << dataBytes << " bytes)\n";
 
 	memset(&(socketinfo.overlapped), 0, sizeof(WSAOVERLAPPED));
-	socketinfo.overlapped.hEvent = (HANDLE)server_s;
+	do_send();
 	//WSASend(server_s, &(socketinfo.dataBuffer), 1, NULL, 0, &(socketinfo.overlapped), send_callback);
 }
 
 void CALLBACK send_callback(DWORD Error, DWORD dataBytes, LPWSAOVERLAPPED overlapped, DWORD lnFlags)
 {
-	DWORD receiveBytes = 0;
 	DWORD flags = 0;
 
-	SOCKET server_s = reinterpret_cast<int>(overlapped->hEvent);
+	SOCKET server_s = reinterpret_cast<SOCKETINFO*>(overlapped)->socket;
 
 	if (dataBytes == 0) {
 		cout << "close socket when sending" << endl;
@@ -100,9 +100,9 @@ void CALLBACK send_callback(DWORD Error, DWORD dataBytes, LPWSAOVERLAPPED overla
 	}  // 클라이언트가 closesocket을 했을 경우
 
 	// WSASend(응답에 대한)의 콜백일 경우
-	cout << "Sent : " << socketinfo.messageBuffer << " (" << dataBytes << ") bytes)\n";
+	cout << "Sent : " << socketinfo.messageBuffer << " (" << dataBytes << " bytes)\n";
 
 	memset(&(socketinfo.overlapped), 0, sizeof(WSAOVERLAPPED));
-	socketinfo.overlapped.hEvent = (HANDLE)server_s;
+	socketinfo.dataBuffer.len = MAX_BUFFER;
 	WSARecv(server_s, &socketinfo.dataBuffer, 1, NULL, &flags, &(socketinfo.overlapped), recv_callback);
 }
