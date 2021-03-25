@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include <stdlib.h>
 using namespace std;
 #include <WS2tcpip.h>
@@ -6,6 +6,8 @@ using namespace std;
 #define MAX_BUFFER        1024
 #define SERVER_IP        "127.0.0.1"
 #define SERVER_PORT        3500
+
+// https://popcorntree.tistory.com/80
 
 struct SOCKETINFO
 {
@@ -15,11 +17,23 @@ struct SOCKETINFO
 	char messageBuffer[MAX_BUFFER];
 };
 
-int cnt = 0;
+bool bEnd;
 SOCKETINFO socketinfo;
 
 void CALLBACK recv_callback(DWORD Error, DWORD dataBytes, LPWSAOVERLAPPED overlapped, DWORD lnFlags);
 void CALLBACK send_callback(DWORD Error, DWORD dataBytes, LPWSAOVERLAPPED overlapped, DWORD lnFlags);
+
+void do_send() {
+	cout << "Enter Message : ";
+	cin.getline(socketinfo.messageBuffer, MAX_BUFFER);
+	int bufferLen = static_cast<int>(strlen(socketinfo.messageBuffer));
+	if (bufferLen == 0)
+		bEnd = true;
+	socketinfo.dataBuffer.len = bufferLen;
+	memset(&socketinfo.overlapped, 0, sizeof(WSAOVERLAPPED));
+	WSASend(socketinfo.socket, &socketinfo.dataBuffer, 1, NULL, 0,
+		&(socketinfo.overlapped), send_callback);
+}
 
 int main()
 {
@@ -44,51 +58,20 @@ int main()
 	socketinfo.dataBuffer.buf = socketinfo.messageBuffer;
 	socketinfo.overlapped.hEvent = (HANDLE)socketinfo.socket;
 	
-	while (true) {
-		cout << "Enter Message : ";
-		cin.getline(socketinfo.messageBuffer, MAX_BUFFER);
-		int bufferLen = static_cast<int>(strlen(socketinfo.messageBuffer));
-		if (bufferLen == 0)
-			break;
-		socketinfo.dataBuffer.len = bufferLen;
-		memset(&socketinfo.overlapped, 0, sizeof(WSAOVERLAPPED));
-		WSASend(socketinfo.socket, &socketinfo.dataBuffer, 1, NULL, 0,
-			&socketinfo.overlapped, send_callback);
-		Sleep(100);
-
-		memset(&socketinfo.messageBuffer, 0, sizeof(MAX_BUFFER));
-		DWORD flags = 0;
-		socketinfo.dataBuffer.len = MAX_BUFFER;
-		WSARecv(socketinfo.socket, &socketinfo.dataBuffer, 1, NULL, &flags,
-		&socketinfo.overlapped, recv_callback);
-		Sleep(100);
-
-		std::cout << "TRACE - " << socketinfo.dataBuffer.buf << std::endl;
-	}
-
-	/*cout << "Enter Message : ";
-	cin.getline(socketinfo.messageBuffer, MAX_BUFFER);
-	int bufferLen = static_cast<int>(strlen(socketinfo.messageBuffer));
-	socketinfo.dataBuffer.len = bufferLen;
-	memset(&socketinfo.overlapped, 0, sizeof(WSAOVERLAPPED));
-	WSASend(socketinfo.socket, &socketinfo.dataBuffer, 1, NULL, 0,
-		&socketinfo.overlapped, send_callback);
-
-	Sleep(1000);*/
-
-	/*memset(&socketinfo.messageBuffer, 0, sizeof(MAX_BUFFER));
-	DWORD flags = 0;
-	socketinfo.dataBuffer.len = MAX_BUFFER;
-	WSARecv(socketinfo.socket, &socketinfo.dataBuffer, 1, NULL, &flags,
-		&socketinfo.overlapped, recv_callback);*/
+	bEnd = false;
+	do_send();
+	while (!bEnd)
+		SleepEx(100, true);
 
 	closesocket(serverSocket);
 	WSACleanup();
 }
 
+
+
 void CALLBACK recv_callback(DWORD Error, DWORD dataBytes, LPWSAOVERLAPPED overlapped, DWORD lnFlags)
 {
-	SOCKET server_s = reinterpret_cast<int>(overlapped->hEvent);
+	SOCKET server_s = reinterpret_cast<SOCKETINFO*>(overlapped)->socket;
 
 	if (dataBytes == 0)
 	{
@@ -96,33 +79,31 @@ void CALLBACK recv_callback(DWORD Error, DWORD dataBytes, LPWSAOVERLAPPED overla
 		closesocket(socketinfo.socket);
 		system("pause");
 		return;
-	}  // Å¬¶óÀÌ¾ðÆ®°¡ closesocketÀ» ÇßÀ» °æ¿ì
-	socketinfo.dataBuffer.len = MAX_BUFFER;
+	}  // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ closesocketï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	cout << "Received : " << socketinfo.messageBuffer << " (" << dataBytes << " bytes)\n";
 
 	memset(&(socketinfo.overlapped), 0, sizeof(WSAOVERLAPPED));
-	socketinfo.overlapped.hEvent = (HANDLE)server_s;
+	do_send();
+	//WSASend(server_s, &(socketinfo.dataBuffer), 1, NULL, 0, &(socketinfo.overlapped), send_callback);
 }
 
 void CALLBACK send_callback(DWORD Error, DWORD dataBytes, LPWSAOVERLAPPED overlapped, DWORD lnFlags)
 {
-	DWORD receiveBytes = 0;
 	DWORD flags = 0;
 
-	SOCKET server_s = reinterpret_cast<int>(overlapped->hEvent);
+	SOCKET server_s = reinterpret_cast<SOCKETINFO*>(overlapped)->socket;
 
 	if (dataBytes == 0) {
 		cout << "close socket when sending" << endl;
 		closesocket(socketinfo.socket);
 		system("pause");
 		return;
-	}  // Å¬¶óÀÌ¾ðÆ®°¡ closesocketÀ» ÇßÀ» °æ¿ì
+	}  // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ closesocketï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	socketinfo.dataBuffer.len = MAX_BUFFER;
-	// WSASend(ÀÀ´ä¿¡ ´ëÇÑ)ÀÇ ÄÝ¹éÀÏ °æ¿ì
+	// WSASend(ï¿½ï¿½ï¿½ä¿¡ ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ ï¿½Ý¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	cout << "Sent : " << socketinfo.messageBuffer << " (" << dataBytes << " bytes)\n";
 
 	memset(&(socketinfo.overlapped), 0, sizeof(WSAOVERLAPPED));
-	socketinfo.overlapped.hEvent = (HANDLE)server_s;
-	//WSARecv(server_s, &socketinfo.dataBuffer, 1, NULL, &flags, &(socketinfo.overlapped), recv_callback);
-	//Sleep(1000);
+	socketinfo.dataBuffer.len = MAX_BUFFER;
+	WSARecv(server_s, &socketinfo.dataBuffer, 1, NULL, &flags, &(socketinfo.overlapped), recv_callback);
 }
