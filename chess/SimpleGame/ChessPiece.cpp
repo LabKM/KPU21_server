@@ -34,5 +34,3 @@ void ChessPiece::Render(Renderer* renderer)
 	renderer->DrawTextureRectAnim(x, y, 0, sx, sy, 1.f, 1.f, 1.f, 1.f, 1.f, m_texture_id, 6, 2, (int)m_type, m_bWhite ? 0 : 1, false);
 }
 
-
-

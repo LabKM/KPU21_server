@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#include "Dependencies\glew.h"
-#include "Dependencies\freeglut.h"
 #include "Vector2D.h"
 #include "GSEGlobals.h"
 
@@ -12,7 +10,6 @@ void setGlobalWindowSize(int x, int y)
 {
     windowSize.x = x;
     windowSize.y = y;
-    glutInitWindowSize(windowX, windowY);
 }
 
 void getGlobalWindowSize(int& x, int& y)

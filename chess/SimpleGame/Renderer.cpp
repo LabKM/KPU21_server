@@ -135,16 +135,6 @@ void Renderer::CreateVertexBufferObjects()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(rectBorder), rectBorder, GL_STATIC_DRAW);
 }
 
-void Renderer::BuildFont()
-{
-	HFONT font;
-	HFONT oldfont;
-
-	GLuint base = glGenLists(96);
-	//font = CreateFontA(-24, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE, , OUT_TT_PRECIS,  )
-
-}
-
 int Renderer::GenPngTexture(char * filePath, GLuint sampling)
 {
 	//find empty slot

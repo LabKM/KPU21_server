@@ -1,5 +1,7 @@
 #pragma once
-#include "GSEGame.h"
+#include "GSEGlobals.h"
+#include "Renderer.h"
+
 
 // ∞‘¿”æ¿ 
 class GameScene
@@ -25,18 +27,6 @@ class InitScene : public GameScene{
 public:
 	InitScene();
 	~InitScene();
-	void Enter();
-	void Leave();
-	void Render() override;
-	void Update(float elapsedTimeInSec, GSEInputs* inputs) override;
-	Scene nowScene();
-};
-
-class MainGameScene : public GameScene {
-
-public:
-	MainGameScene();
-	~MainGameScene();
 	void Enter();
 	void Leave();
 	void Render() override;

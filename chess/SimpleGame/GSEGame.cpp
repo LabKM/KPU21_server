@@ -2,8 +2,8 @@
 #include "ObjectController.h"
 #include "ChessBoard.h"
 #include "ChessPiece.h"
-#include "math.h"
 #include "GSEGame.h"
+#include "math.h"
 
 GSEGame::GSEGame()
 {
@@ -62,97 +62,6 @@ void GSEGame::Update(float elapsedTimeInSec, GSEInputs* inputs)
 	if (inputs->RB) {
 
 	}
-
-	//GSEUpdateParams othersParam;
-	//GSEUpdateParams heroParam;
-	//memset(&othersParam, 0, sizeof(GSEUpdateParams));
-	//memset(&heroParam, 0, sizeof(GSEUpdateParams));
-	////sword
-	//{
-	//	float swordPosX = 0.f;
-	//	float swordPosY = 0.f;
-	//	if (inputs->ARROW_LEFT) swordPosX += -1.f;
-	//	if (inputs->ARROW_RIGHT) swordPosX += 1.f;
-	//	if (inputs->ARROW_DOWN) swordPosY += -1.f;
-	//	if (inputs->ARROW_UP) swordPosY += 1.f;
-	//	float swordDirSize = sqrtf(swordPosX * swordPosX + swordPosY * swordPosY);
-	//	if (swordDirSize > 0.f)
-	//	{
-	//		float norDirX = swordPosX / swordDirSize;
-	//		float norDirY = swordPosY / swordDirSize;
-	//		float aX, aY, asX, asY;
-	//		float bX, bY, bsX, bsY;
-	//		float temp;
-	//		m_Objects[m_HeroID]->GetPosition(&aX, &aY, &temp);
-	//		m_Objects[m_HeroID]->GetSize(&asX, &asY);
-	//		if (m_Objects[m_HeroID]->GetRemainingCoolTime() < 0.f)
-	//		{
-	//			int swordID = AddObject(0.f, 0.f, 0.f, 1.f, 1.f, 0.f, 0.f, 0.f, 0.f, 1.f);
-	//			m_Objects[swordID]->SetParentID(m_HeroID);
-	//			m_Objects[swordID]->SetRelPosition(norDirX, norDirY, 0.f);
-	//			m_Objects[swordID]->SetStickToParent(true);
-	//			m_Objects[swordID]->SetLife(100.f);
-	//			m_Objects[swordID]->SetLifeTime(0.3f);
-	//			m_Objects[m_HeroID]->ResetRemainingCoolTime();
-	//		}
-	//	}
-	//}
-	////Update All Objects
-	//for (int i = 0; i < GSE_MAX_OBJECTS; i++)
-	//{
-	//	if (m_Objects[i] != NULL)
-	//	{
-	//		if (i == m_HeroID)
-	//		{
-	//			m_Objects[i]->Update(elapsedTimeInSec, &heroParam);
-	//		}
-	//		else
-	//		{
-	//			if (m_Objects[i]->GetStickToParent())
-	//			{
-	//				float posX, posY, depth;
-	//				float relPosX, relPosY, relDepth;
-	//				int parentID = m_Objects[i]->GetParentID();
-	//				m_Objects[parentID]->GetPosition(&posX, &posY, &depth);
-	//				m_Objects[i]->GetRelPosition(&relPosX, &relPosY, &relDepth);
-	//				m_Objects[i]->SetPosition(posX + relPosX, posY + relPosY, depth + relDepth);
-	//				m_Objects[i]->Update(elapsedTimeInSec, &othersParam);
-	//			}
-	//			else
-	//			{
-	//				m_Objects[i]->Update(elapsedTimeInSec, &othersParam);
-	//			}
-	//		}
-	//	}
-	//}
-	////Processing collision
-	//bool isCollide[GSE_MAX_OBJECTS];
-	//memset(isCollide, 0, sizeof(bool) * GSE_MAX_OBJECTS);
-	//for (int i = 0; i < GSE_MAX_OBJECTS; i++)
-	//{
-	//	for (int j = i + 1; j < GSE_MAX_OBJECTS; j++)
-	//	{
-	//		if (m_Objects[i] != NULL && m_Objects[j] != NULL
-	//			&&
-	//			m_Objects[i]->GetApplyPhysics() && m_Objects[j]->GetApplyPhysics())
-	//		{
-	//			bool collide = ProcessCollision(m_Objects[i], m_Objects[j]);
-	//			if (collide)
-	//			{
-	//				isCollide[i] = true;
-	//				isCollide[j] = true;
-	//			}
-	//		}
-	//	}
-	//}
-	//for (int i = 0; i < GSE_MAX_OBJECTS; i++)
-	//{
-	//	if (m_Objects[i] != NULL)
-	//	{
-	//		if (!isCollide[i])
-	//			m_Objects[i]->SetState(GSEObjectState::STATE_FALLING);
-	//	}
-	//}
 }
 
 Scene GSEGame::GetSceneNow()

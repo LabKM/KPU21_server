@@ -111,7 +111,6 @@ public:
 		float minVelX, float minVelY,
 		float maxVelX, float maxVelY);
 
-	void BuildFont();
 	int GenPngTexture(char * filePath, GLuint sampling = GL_NEAREST);
 	int GenBmpTexture(char * filePath, GLuint sampling = GL_NEAREST);
 	bool DeleteTexture(int idx, bool printLog = false);

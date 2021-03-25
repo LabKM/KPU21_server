@@ -7,13 +7,13 @@
 
 #include <fstream>
 #include <math.h>
-#include <winsock2.h>
-#include <windows.h>
 #include <iosfwd>
+
+#include <WS2tcpip.h>
+#include <windows.h>
 #include <vector>
 #include <limits>
 #include <sstream>
 #include <string>
 #include <cassert>
 #include <iomanip>
-#include <iostream>
